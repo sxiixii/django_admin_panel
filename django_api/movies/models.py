@@ -105,7 +105,7 @@ class PersonRole(models.TextChoices):
 
 
 class PersonFilmWork(UUIDMixin):
-    film_work = models.ForeignKey(FilmWork, related_name='person_film', on_delete=models.CASCADE)
+    film_work = models.ForeignKey(FilmWork, related_name='film_person', on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     role = models.CharField(
         _('role'),
