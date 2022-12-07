@@ -1,9 +1,8 @@
 from django.contrib.postgres.aggregates import ArrayAgg
-from django.db import connection
 from django.db.models import Q
 from django.http import JsonResponse
-from django.views.generic.list import BaseListView
 from django.views.generic.detail import BaseDetailView
+from django.views.generic.list import BaseListView
 
 from movies.models import FilmWork, PersonRole
 
@@ -35,7 +34,10 @@ class MoviesApiMixin:
         ).values(
             'id', 'title', 'description', 'creation_date', 'rating', 'type'
         ).annotate(
-            genres=get_genres, actors=get_actors, directors=get_directors, writers=get_writes,
+            genres=get_genres,
+            actors=get_actors,
+            directors=get_directors,
+            writers=get_writes,
         )
         return queryset
 
