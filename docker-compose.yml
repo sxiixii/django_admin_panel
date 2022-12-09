@@ -5,15 +5,15 @@ volumes:
   static_value:
   media_value:
 
-
 services:
   db:
     image: postgres:13.0-alpine
     container_name: db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./fixtures/movies_database.sql:/docker-entrypoint-initdb.d/movies_database.sql:ro
     env_file:
-      - ./app/.env
+      - app/.env
 
   web:
     build: app
@@ -22,12 +22,13 @@ services:
     volumes:
       - static_value:/opt/app/static/
       - media_value:/opt/app/media/
+      - ./fixtures:/opt/app/fixtures/:ro
     expose:
       - "8000"
     depends_on:
       - db
     env_file:
-      - ./app/.env
+      - app/.env
 
   nginx:
     image: nginx:latest
@@ -44,5 +45,4 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    environment:
-      NGINX_SET_REAL_IPS_FROM: "['192.168.1.0/24',]"
+

@@ -33,7 +33,7 @@ class FilmWorkAdmin(admin.ModelAdmin):
     )
     list_filter = ('type',)
     search_fields = ('title', 'description', 'id')
-    list_prefetch_related = ('genres', 'person_set', 'person_film')
+    list_prefetch_related = ('genres', 'person_set', 'film_person')
 
     def get_queryset(self, request):
         queryset = (
@@ -47,13 +47,13 @@ class FilmWorkAdmin(admin.ModelAdmin):
         return ', '.join([genre.name for genre in obj.genres.all()])
 
     def get_actors(self, obj):
-        person_idx = [film.person_id for film in obj.person_film.all() if film.role == 'actor']
-        actors = [person.full_name for person in obj.person_set.all() if person.id in person_idx]
+        person_idx = [film.person_id for film in obj.film_person.all() if film.role == 'actor']
+        actors = [person.full_name for person in obj.film_person.all() if person.id in person_idx]
         return ', '.join(actor for actor in actors)
 
     def get_directors(self, obj):
-        person_idx = [film.person_id for film in obj.person_film.all() if film.role == 'director']
-        director = [person.full_name for person in obj.person_set.all() if person.id in person_idx]
+        person_idx = [film.person_id for film in obj.film_person.all() if film.role == 'director']
+        director = [person.full_name for person in obj.film_person.all() if person.id in person_idx]
         return ', '.join(actor for actor in director)
 
     get_genres.short_description = 'Жанры'
