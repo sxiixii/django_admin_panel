@@ -5,10 +5,6 @@ all:
 	@echo "make fixtures		- Загрузить дамп fixtures.json в БД "
 	@echo "make superuser		- Создать суперпользователя "
 
-fake_migrate:
-	#Создание фэйковой миграции
-	docker compose exec web python manage.py migrate movies --fake
-
 migrate:
 	docker compose exec web python manage.py migrate
 

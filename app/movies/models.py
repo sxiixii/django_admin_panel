@@ -1,3 +1,4 @@
+from datetime import datetime
 from uuid import uuid4
 
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -41,7 +42,7 @@ class FilmType(models.TextChoices):
 class FilmWork(UUIDMixin, TimeStampedMixin):
     title = models.CharField(_('title'), max_length=255)
     description = models.TextField(_('description'), blank=True)
-    creation_date = models.DateField(_('creation date'))
+    creation_date = models.DateField(_('creation date'), blank=True)
     rating = models.FloatField(
         _('rating'),
         blank=True,
